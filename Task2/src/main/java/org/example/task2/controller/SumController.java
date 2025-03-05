@@ -1,10 +1,12 @@
 package org.example.task2.controller;
 
+import org.example.task2.dto.SumRequest;
 import org.example.task2.service.NumberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -21,12 +23,10 @@ public class SumController {
     }
 
     @PostMapping("/cal")
-    public String sum(@RequestParam("num1") String num1,
-                      @RequestParam("num2") String num2,
-                      Model model) {
-        String result = numberService.addNumberService(num1,num2);
-        model.addAttribute("num1", num1);
-        model.addAttribute("num2", num2);
+    public String sum(@RequestBody SumRequest sumRequest, Model model) {
+        String result = numberService.addNumberService(sumRequest.getNum1(), sumRequest.getNum2());
+        model.addAttribute("num1", sumRequest.getNum1());
+        model.addAttribute("num2", sumRequest.getNum2());
         model.addAttribute("result", result);
         return "sum";
     }
